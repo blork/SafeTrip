@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, SafeTripActivity!</string>
+    <string name="app_name">SafeTrip</string>
+    <string name="destination">Walking to</string>
+    <string name="current_loc">Walking from</string>
+    <string name="find_route">Find Route</string>
+    <string name="safe_score">SafeScore</string>
+    <string name="no_internet_text">This app needs an internet connection to find routes. Please connect to the internet and try again.</string>
+    <string name="no_internet_title">No Network Connection</string>
+
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="8dp" >
+
+    <Button
+        android:id="@+id/buttonFindRoute"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="24dp"
+        android:text="@string/find_route"
+        android:textSize="22sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/editTextOrigin"
+                android:layout_width="fill_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/button2"
+                android:hint="@string/current_loc"
+                android:inputType="textPostalAddress"
+                android:padding="8dp" >
+
+                <requestFocus />
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/buttonGeolocate"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="8dp"
+                android:background="@null"
+                android:src="@android:drawable/ic_menu_mylocation" />
+
+            <ImageButton
+                android:id="@+id/buttonRemoveGeolocate"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="8dp"
+                android:background="@null"
+                android:src="@android:drawable/ic_menu_delete"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressGeo"
+                style="@android:style/Widget.ProgressBar.Large.Inverse"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="8dp"
+                android:indeterminate="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/editTextDestination"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/destination"
+            android:inputType="textPostalAddress"
+            android:padding="8dp" />
+    </LinearLayout>
+
+</RelativeLayout>

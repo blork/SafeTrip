@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.blork.safetrip"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+    <uses-sdk android:targetSdkVersion="14" />
+
+    <application
+        android:configChanges="keyboardHidden|orientation"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock" >
+        <uses-library android:name="com.google.android.maps" />
+
+        <activity
+            android:label="@string/app_name"
+            android:name=".SafeTripActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".MappingActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".MappingActivity$MapRouteActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+</manifest>
