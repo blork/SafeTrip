@@ -23,8 +23,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -46,22 +46,40 @@ import com.google.android.maps.GeoPoint;
 
 public class SafeTripActivity extends FragmentActivity {
 
+
+
 	public static final String SERVICE = "http://rezippy.com/safe/route.php";
 	public static List<Route> routes = new ArrayList<Route>();
+	private LocationManager locationManager;
+	private Button findRoute;
+	private ImageButton geoLocate;
+	private ProgressBar geoProgress;
+	private ImageButton geoDelete;
+	private EditText originEditText;
+	private EditText destinationEditText;
+	private LocationListener locationListener;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		final Button findRoute = (Button)findViewById(R.id.buttonFindRoute);
-		final ImageButton geoLocate = (ImageButton)findViewById(R.id.buttonGeolocate);
-		final ProgressBar geoProgress = (ProgressBar)findViewById(R.id.progressGeo);
-		final ImageButton geoDelete = (ImageButton)findViewById(R.id.buttonRemoveGeolocate);
-		
-		final EditText originEditText = (EditText)findViewById(R.id.editTextOrigin);
-		final EditText destinationEditText = (EditText)findViewById(R.id.editTextDestination);
+		findRoute = (Button)findViewById(R.id.buttonFindRoute);
+		geoLocate = (ImageButton)findViewById(R.id.buttonGeolocate);
+		geoProgress = (ProgressBar)findViewById(R.id.progressGeo);
+		geoDelete = (ImageButton)findViewById(R.id.buttonRemoveGeolocate);
 
+		originEditText = (EditText)findViewById(R.id.editTextOrigin);
+		destinationEditText = (EditText)findViewById(R.id.editTextDestination);
+
+		if (savedInstanceState != null) {
+			String origin = savedInstanceState.getString("origin");
+			if (origin != null) originEditText.setText(origin);
+
+			String destination = savedInstanceState.getString("destination");
+			if (destination != null) destinationEditText.setText(destination);
+		}
 
 		findRoute.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -76,7 +94,7 @@ public class SafeTripActivity extends FragmentActivity {
 			}
 
 		});
-		
+
 		geoDelete.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				geoProgress.setVisibility(View.GONE);
@@ -86,8 +104,8 @@ public class SafeTripActivity extends FragmentActivity {
 				originEditText.setText("");
 			}
 		});
-		
-		final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 		geoLocate.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -98,12 +116,9 @@ public class SafeTripActivity extends FragmentActivity {
 
 				// Acquire a reference to the system Location Manager
 				// Define a listener that responds to location updates
-				LocationListener locationListener = new LocationListener() {
+				locationListener = new LocationListener() {
 					public void onLocationChanged(Location location) {
-						originEditText.setText(location.getLatitude() + ", " + location.getLongitude());
-						geoProgress.setVisibility(View.GONE);
-						geoLocate.setVisibility(View.GONE);
-						geoDelete.setVisibility(View.VISIBLE);
+						new GeoLocateTask(location).execute();
 					}
 
 					public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -112,8 +127,18 @@ public class SafeTripActivity extends FragmentActivity {
 
 					public void onProviderDisabled(String provider) {}
 				};		
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
+				Criteria criteria = new Criteria();
+				criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+				criteria.setAltitudeRequired(false);
+				criteria.setBearingRequired(false);        
+				criteria.setCostAllowed(true);
+				criteria.setPowerRequirement(Criteria.NO_REQUIREMENT);
+
+				String bestProvider = locationManager.getBestProvider(criteria, true);
+				locationManager.requestLocationUpdates(
+						bestProvider != null ? bestProvider : LocationManager.NETWORK_PROVIDER, 0, 0, locationListener
+						);
 			}
 		});
 	}
@@ -159,7 +184,6 @@ public class SafeTripActivity extends FragmentActivity {
 
 			try {
 				List<Address> addresses;
-
 				addresses = geoCoder.getFromLocationName(origin, 1);
 				if (addresses.size() > 0) {
 					GeoPoint originGeoPoint = new GeoPoint(
@@ -261,7 +285,7 @@ public class SafeTripActivity extends FragmentActivity {
 		protected void onPostExecute(Boolean result) {
 			dialog.dismiss();
 			if (result) {
-				Intent mapIntent = new Intent(getApplicationContext(), MappingActivity.class);			
+				Intent mapIntent = new Intent(getApplicationContext(), DirectionListActivity.class);			
 				startActivity(mapIntent);
 			} else {
 				dialog.dismiss();
@@ -280,6 +304,47 @@ public class SafeTripActivity extends FragmentActivity {
 			}
 		}
 
+	}
+
+
+	private class GeoLocateTask extends AsyncTask<Void, Integer, String> {
+
+		private Location location;
+
+		public GeoLocateTask(Location location) {
+			this.location = location;
+		}
+
+		protected String doInBackground(Void... nothing) {			
+			Geocoder gc = new Geocoder(getApplicationContext(), Locale.getDefault());
+			String addressText = "";
+			try {
+				Address address = gc.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
+				for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+					addressText += address.getAddressLine(i) + ", ";
+				} 
+			} catch (Exception e) {
+				addressText = location.getLatitude() + ", " + location.getLongitude();
+			}
+
+			return addressText;
+		}
+
+		protected void onPostExecute(String text) {
+			originEditText.setText(text);
+			geoProgress.setVisibility(View.GONE);
+			geoLocate.setVisibility(View.GONE);
+			geoDelete.setVisibility(View.VISIBLE);
+			locationManager.removeUpdates(locationListener);
+		}
+
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString("origin", originEditText.getText().toString());
+		outState.putString("destination", destinationEditText.getText().toString());
+		super.onSaveInstanceState(outState);
 	}
 
 }

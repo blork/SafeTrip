@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center_vertical"
-    android:padding="5dp" >
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/listitem_bg">
 
-    <RelativeLayout
-        android:id="@+id/list_container"
+    <TextView
+        android:id="@android:id/title"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_vertical" >
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textSize="14dp" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="5dp"
-            android:gravity="center_vertical"
-            android:text="this is a title"
-            android:textColor="#ff000000"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_next"
+        android:icon="@drawable/ic_action_next"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="Next"/>
+    <item
+        android:id="@+id/menu_prev"
+        android:icon="@drawable/ic_action_prev"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        android:title="Previous"/>
+
+</menu>

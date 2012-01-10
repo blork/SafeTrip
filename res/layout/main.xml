@@ -12,14 +12,36 @@
         android:layout_alignParentBottom="true"
         android:padding="24dp"
         android:text="@string/find_route"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:background="@drawable/good_button"/>
+
+    <LinearLayout
+        android:id="@+id/info_text_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rounded_corners"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/info_text"
+            android:gravity="center"
+            android:textSize="12dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info_text_box"
+        android:background="@drawable/rounded_corners"
+        android:orientation="vertical"
+        android:padding="8dp" >
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
@@ -35,10 +57,8 @@
                 android:layout_toLeftOf="@+id/button2"
                 android:hint="@string/current_loc"
                 android:inputType="textPostalAddress"
-                android:padding="8dp" >
-
-                <requestFocus />
-            </EditText>
+                android:padding="8dp"
+                android:background="@drawable/edit_text" />
 
             <ImageButton
                 android:id="@+id/buttonGeolocate"
@@ -63,7 +83,7 @@
 
             <ProgressBar
                 android:id="@+id/progressGeo"
-                style="@android:style/Widget.ProgressBar.Large.Inverse"
+                style="@android:style/Widget.ProgressBar.Small.Inverse"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
@@ -80,7 +100,8 @@
             android:layout_marginTop="16dp"
             android:hint="@string/destination"
             android:inputType="textPostalAddress"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:background="@drawable/edit_text" />
     </LinearLayout>
 
 </RelativeLayout>

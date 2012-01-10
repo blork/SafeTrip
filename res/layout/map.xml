@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical" >
 
     <com.google.android.maps.MapView
@@ -12,24 +13,22 @@
         android:apiKey="0ADkS9UJ80_kCh5ubZs1Uxj6_Adt3wZbUEGXzZw"
         android:clickable="true" />
 
-    <Button
-        android:id="@+id/buttonNext"
+    <TextView
+        android:id="@+id/directionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Next" />
-
-    <Button
-        android:id="@+id/buttonPrev"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/buttonNext"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:text="Prev" />
+        android:layout_alignParentTop="true"
+        android:background="@drawable/actionbar_bg"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="8dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="#FFF" />
 
 </RelativeLayout>

@@ -3,53 +3,58 @@ package com.blork.safetrip;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.ActionBar.OnNavigationListener;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentMapActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.MenuItem;
-import android.view.View;
+import android.support.v4.view.ViewPager;
 
-public class MappingActivity extends FragmentMapActivity {
+import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.TitleProvider;
+
+public class DirectionListActivity extends FragmentMapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.fragment_layout);
-		getSupportFragmentManager()
-		.beginTransaction()
-		.add(R.id.titles, new Fragment())
-		.commit();
+		setContentView(R.layout.fragment_pager);
+		PagerAdapter mAdapter = new PagerAdapter(getSupportFragmentManager());
 
-		ensureSupportActionBarAttached();
+		ViewPager mPager = (ViewPager)findViewById(R.id.pager);
+		mPager.setAdapter(mAdapter);
 
-		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		RouteAdapter items = new RouteAdapter(this, android.R.layout.simple_spinner_item, SafeTripActivity.routes);
-		items.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		getSupportActionBar().setListNavigationCallbacks(items, new OnNavigationListener() {
-			public boolean onNavigationItemSelected(int route, long itemId) {
-				getSupportFragmentManager()
-				.beginTransaction()
-				.replace(R.id.titles, StepListFragment.newInstance(route))
-				.commit();
-
-				View detailsFrame = findViewById(R.id.details);
-				boolean mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-				if (mDualPane) {
-					MapRouteFragment map = new MapRouteFragment();
-					map.setArguments(getIntent().getExtras());
-
-					getSupportFragmentManager().beginTransaction()
-					.replace(R.id.details, map)
-					.commit();
-				}
+		TitlePageIndicator mIndicator = (TitlePageIndicator)findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
 
 
-				return true;
+		//int index = getIntent().getExtras().getInt("index");
+		mPager.setCurrentItem(0);
+	}
+
+	private static class PagerAdapter extends FragmentStatePagerAdapter implements TitleProvider {
+		public PagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public int getCount() {
+			return SafeTripActivity.routes.size();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return StepListFragment.newInstance(position);
+		}
+
+		@Override
+		public String getTitle(int position) {
+			if (position == 0) {
+				return "SafeRoute";
+			} else {
+				return "Alternative route " + position;
 			}
-		});
+		}
 	}
 
 	@Override
@@ -88,11 +93,7 @@ public class MappingActivity extends FragmentMapActivity {
 				finish();
 				return;
 			}
-			
-			ensureSupportActionBarAttached();
 
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			
 
 			MapRouteFragment map = new MapRouteFragment();
 			map.setArguments(getIntent().getExtras());

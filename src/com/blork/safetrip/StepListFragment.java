@@ -1,29 +1,50 @@
 package com.blork.safetrip;
 
+import java.util.List;
+
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.blork.safetrip.MapRouteFragment.MapOverlay;
 import com.blork.safetrip.util.Debug;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 public class StepListFragment extends ListFragment {
 	boolean mDualPane;
 	private int mCurCheckPosition = 0;
+
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View view = inflater.inflate(R.layout.list, container, false);
+
+		return view;
+
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		// Populate list with our static array of titles.
-		int index = getSupportActivity().getSupportActionBar().getSelectedNavigationIndex();
 
-		setListAdapter(new StepAdapter(getActivity(), android.R.layout.simple_list_item_1, 
+		setListAdapter(new StepAdapter(getActivity(), R.layout.step_list_item, 
 				SafeTripActivity.routes.get(getShownRoute()).getSteps()));
 
-		
+
 		// Check to see if we have a frame in which to embed the details
 		// fragment directly in the containing UI.
 		View detailsFrame = getActivity().findViewById(R.id.details);
@@ -37,7 +58,7 @@ public class StepListFragment extends ListFragment {
 			// showDetails(mCurCheckPosition);
 		}
 	}
-	
+
 	public static StepListFragment newInstance(int route) {
 		Debug.log("The int passed to StepListFragment newInstance is " + route);
 		StepListFragment f = new StepListFragment();
@@ -90,7 +111,7 @@ public class StepListFragment extends ListFragment {
 		} else {
 			// Otherwise we need to launch a new activity to display
 			// the dialog fragment with selected text.
-			Intent intent = new Intent(getActivity(), MappingActivity.MapRouteActivity.class);
+			Intent intent = new Intent(getActivity(), DirectionListActivity.MapRouteActivity.class);
 			intent.putExtra("route", getShownRoute());
 			intent.putExtra("step", step);
 

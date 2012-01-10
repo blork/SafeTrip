@@ -5,40 +5,41 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="7" />
-    <uses-sdk android:targetSdkVersion="14" />
+    <uses-sdk android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:configChanges="keyboardHidden|orientation"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sherlock" >
+        android:logo="@drawable/ic_logo"
+        android:theme="@style/Theme.SafeTheme" >
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:label="@string/app_name"
             android:name=".SafeTripActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait" >
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".DirectionListActivity"
             android:label="@string/app_name"
-            android:name=".MappingActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".DirectionListActivity$MapRouteActivity"
             android:label="@string/app_name"
-            android:name=".MappingActivity$MapRouteActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

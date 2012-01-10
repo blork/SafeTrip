@@ -27,4 +27,8 @@ public class Step {
 		return Html.fromHtml(htmlDescription.replace("<div style=\"font-size:0.9em\">", "<br />"));
 	}
 	
+	public String toString() {
+		return Html.fromHtml(htmlDescription.replace("<div style=\"font-size:0.9em\">", ". ")).toString();
+	}
+	
 }

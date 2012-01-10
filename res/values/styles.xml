@@ -1,0 +1,40 @@
+<resources>
+
+    <style name="Theme.SafeTheme" parent="@style/Theme.Sherlock.Light">
+        <item name="abBackground">@drawable/actionbar_bg</item>
+        <item name="abTitleTextStyle">@style/Theme.SafeTheme.ActionBar.TitleTextStyle</item>
+        <item name="abSubtitleTextStyle">@style/Theme.SafeTheme.ActionBar.SubTitleTextStyle</item>
+        <item name="android:actionBarStyle">@style/Theme.SafeTheme.ActionBar</item>
+        <item name="android:windowBackground">@color/main_background</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+    </style>
+
+    <style name="Theme.SafeTheme.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/actionbar_bg</item>
+        <item name="android:color">#FFFFFF</item>
+        <item name="android:titleTextStyle">@style/Theme.SafeTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:subtitleTextStyle">@style/Theme.SafeTheme.ActionBar.SubTitleTextStyle</item>
+    </style>
+
+    <style name="Theme.SafeTheme.ActionBar.TitleTextStyle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Theme.SafeTheme.ActionBar.SubTitleTextStyle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CustomTitlePageIndicator">
+        <item name="android:background">@drawable/actionbar_bg</item>
+        <item name="footerColor">@color/main_background</item>
+        <item name="footerLineHeight">1dp</item>
+        <item name="footerIndicatorHeight">3dp</item>
+        <item name="footerIndicatorStyle">triangle</item>
+        <item name="textColor">#AAFFFFFF</item>
+        <item name="selectedColor">#FFFFFFFF</item>
+        <item name="selectedBold">true</item>
+    </style>
+
+</resources>
