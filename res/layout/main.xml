@@ -68,7 +68,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginRight="8dp"
                 android:background="@null"
-                android:src="@android:drawable/ic_menu_mylocation" />
+                android:src="@drawable/ic_menu_mylocation" />
 
             <ImageButton
                 android:id="@+id/buttonRemoveGeolocate"
@@ -78,12 +78,13 @@
                 android:layout_centerInParent="true"
                 android:layout_marginRight="8dp"
                 android:background="@null"
-                android:src="@android:drawable/ic_menu_delete"
+                android:src="@drawable/ic_menu_delete"
                 android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progressGeo"
-                style="@android:style/Widget.ProgressBar.Small.Inverse"
+                style="@android:style/Widget.ProgressBar.Inverse"
+                android:indeterminateDrawable="@drawable/progress_medium_holo"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
